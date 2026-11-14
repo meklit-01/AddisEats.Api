@@ -3,7 +3,9 @@ using AddisEats.Api.DTOs;
 using AddisEats.Api.Mappers;
 using AddisEats.Api.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
+using AddisEats.Api.Services.MenuItemService;
 namespace AddisEats.Api.Controllers;
+
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -11,10 +13,14 @@ namespace AddisEats.Api.Controllers;
 public class RestaurantController : ControllerBase
 {
     private readonly IRestaurantService _restaurantService;
+    private readonly IMenuItemService _menuItemService;
 
-    public RestaurantController(IRestaurantService restaurantService)
+    public RestaurantController(
+        IRestaurantService restaurantService,
+        IMenuItemService menuItemService)
     {
         _restaurantService = restaurantService;
+        _menuItemService = menuItemService;
     }
     [HttpGet("{id}")]
 
@@ -36,6 +42,21 @@ public class RestaurantController : ControllerBase
         return Ok(restaurantDTOs);
 
     }
+    [HttpGet("{id}/menu")]
+    public IActionResult GetRestaurantMenu(int id)
+    {
+        // Check whether the restaurant exists
+        var restaurant = _restaurantService.GetRestaurantById(id);
 
+        if (restaurant == null)
+        {
+            return NotFound("Restaurant not found");
+        }
+
+        // Get menu items belonging to this restaurant
+        var menuItems = _menuItemService.GetByRestaurantId(id);
+
+        return Ok(menuItems);
+    }
 }
 
