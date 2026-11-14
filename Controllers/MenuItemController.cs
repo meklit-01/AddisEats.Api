@@ -33,4 +33,19 @@ public class MenuItemController : ControllerBase
     {
         return Ok(menuItems);
     }
+
+    [HttpGet("{id}")]
+
+    public IActionResult GetById(int id)
+    {
+        var menuItem = menuItems.FirstOrDefault(m => m.Id == id);
+
+        if(menuItem == null)
+        {
+            return NotFound();
+        }
+        return Ok(menuItem);
+    }
+    
+
 }
