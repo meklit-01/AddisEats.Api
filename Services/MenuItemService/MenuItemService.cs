@@ -23,9 +23,12 @@ public class MenuItemService : IMenuItemService
         new MenuItem { Id = 15, Name = "Fruit Salad", Category = "Dessert", Price = 150}
     };
 
-    public List<MenuItem> GetAll()
+    public List<MenuItem> GetAll(string? category)
     {
-        return _menuItems;
+     var item = _menuItems
+            .Where(x => category == null || x.Category == category)
+            .ToList();
+        return item;
     }
 
     public MenuItem? GetById(int id)

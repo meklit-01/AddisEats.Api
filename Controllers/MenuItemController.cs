@@ -20,9 +20,9 @@ public class MenuItemController : ControllerBase
    
     [HttpGet]
 
-    public IActionResult GetAll()
+    public IActionResult GetAll([FromQuery] string? category)
     {
-        var result = _menuItemService.GetAll();
+        var result = _menuItemService.GetAll(category);
 
         return Ok(result);
     }
