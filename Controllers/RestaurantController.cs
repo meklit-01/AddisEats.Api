@@ -36,13 +36,20 @@ public class RestaurantController : ControllerBase
         return Ok(restaurant);
 
     }
-    [HttpGet()]
-    public IActionResult GetRestaurat([FromQuery] RestaurantQuery query)
+    [HttpGet]
+    public IActionResult GetRestaurants([FromQuery] RestaurantQuery query)
     {
-        var restaurants = _restaurantService.GetAllRestaurants(query);
-        var restaurantDTOs = restaurants.Select(r => r.ToDTO()).ToList();
-        return Ok(restaurantDTOs);
+        var result = _restaurantService.GetAllRestaurants(query);
 
+        var response = new PaginatedResultDTO<RestaurantDTO>
+        {
+            Items = result.Items.Select(r => r.ToDTO()).ToList(),
+            TotalCount = result.TotalCount,
+            Page = result.Page,
+            PageSize = result.PageSize
+        };
+
+        return Ok(response);
     }
     [HttpGet("{id}/menu")]
     public IActionResult GetRestaurantMenu(int id)
