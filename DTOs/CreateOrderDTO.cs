@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AddisEats.Api.Validation;
 namespace AddisEats.Api.DTOs;
 
 public record CreateOrderDTO(
@@ -10,10 +11,11 @@ public record CreateOrderDTO(
     [StringLength(60, MinimumLength = 1, ErrorMessage = "Delivery address must be minmum length of 1")]
     string DeliveryAddress,
     [Required(ErrorMessage = "Customer phone is required.")]
-    
+    [EthiopianMobile]
     string CustomerPhone,
     [Range(1, 50, ErrorMessage = "Quantity must be between 1 and 50.")]
     int Quantity,
-   
+    [Required(ErrorMessage = "Total amount is required.")]
+    [ETBAmount]
     decimal TotalAmount
 );
