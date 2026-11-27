@@ -3,6 +3,7 @@ using AddisEats.Api.DTOs;
 using AddisEats.Api.Mappers;
 using AddisEats.Api.Services.RestaurantService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using AddisEats.Api.Services.MenuItemService;
 
 
@@ -51,6 +52,7 @@ public class RestaurantController : ControllerBase
 
         return Ok(response);
     }
+    [Authorize]
     [HttpGet("{id}/menu")]
     public IActionResult GetRestaurantMenu(int id)
     {

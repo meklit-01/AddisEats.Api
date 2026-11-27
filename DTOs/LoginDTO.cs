@@ -1,4 +1,4 @@
-using System.ComponetModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace AddisEats.Api.DTOs; 
 

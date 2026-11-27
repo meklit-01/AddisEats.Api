@@ -1,9 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AddisEates.Api.Configuration;
-using AddisEats.Api.Configuration;
 using AddisEats.Api.Models;
+using AddisEats.Api.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -27,7 +26,7 @@ public class AuthService
                 ),
             new Claim(
                 JwtRegisteredClaimNames.Jti,
-                Guid.NewGuid.ToString()
+                Guid.NewGuid().ToString()
                 ),
             new Claim(
                 ClaimTypes.Name,
@@ -45,11 +44,11 @@ public class AuthService
         var token = new JwtSecurityToken(issuer: _options.Issuer,
             audience: _options.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_options.AccessTokenMinutes)
-            SigningCredentials: credentials
+            expires: DateTime.UtcNow.AddMinutes(_options.AccessTokenMinutes),
+            signingCredentials: credentials
             );
 
-        return new JwtSecurityToken().WriteToken(token);
+        return new JwtSecurityTokenHandler().WriteToken(token);
 
     }
 }
