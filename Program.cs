@@ -112,11 +112,11 @@ builder.Services.AddAuthentication(
 builder.Services.AddAuthorization();
 builder.Services.AddAuthorization(options =>
 {
-    //options.AddPolicy("VerifiedCustomer", policy =>
-    //{
-    //    policy.RequireRole("Customer");
-    //    policy.RequireClaim("IsVerified", "true");
-    //});
+    options.AddPolicy("VerifiedCustomer", policy =>
+    {
+        policy.RequireRole("Customer");
+        policy.RequireClaim("IsVerified", "true");
+    });
 
     options.FallbackPolicy = new AuthorizationPolicyBuilder()
     .RequireAuthenticatedUser()

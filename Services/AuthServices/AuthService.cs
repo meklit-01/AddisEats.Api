@@ -35,7 +35,12 @@ public class AuthService
             new Claim(
                 ClaimTypes.Role,
                 user.Role
+            ),
+             new Claim(
+                "IsVerified",
+                user.IsVerified ? "true": "false"
             )
+
         };
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_options.SigningKey)

@@ -70,7 +70,8 @@ public class RestaurantController : ControllerBase
         return Ok(menuItems);
     }
 
-    [Authorize(Roles = "Customer")]
+    //[Authorize(Roles = "Admin, Customer")]
+    [Authorize(Policy= "VerifiedCustomer")]
     [HttpGet("active")]
     public IActionResult GetActive()
     {
