@@ -5,6 +5,7 @@ using AddisEats.Api.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using AddisEats.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AddisEats.Api.Controllers;
 
@@ -26,6 +27,7 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public ActionResult<LoginResponseDTO> Login(LoginDTO request)
     {

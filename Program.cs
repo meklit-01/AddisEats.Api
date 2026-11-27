@@ -10,6 +10,7 @@ using AddisEats.Api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.OpenApi;
 
@@ -109,6 +110,18 @@ builder.Services.AddAuthentication(
 
 // Authorization
 builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    //options.AddPolicy("VerifiedCustomer", policy =>
+    //{
+    //    policy.RequireRole("Customer");
+    //    policy.RequireClaim("IsVerified", "true");
+    //});
+
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+} );
 
 var app = builder.Build();
 

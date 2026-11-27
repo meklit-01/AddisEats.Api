@@ -52,7 +52,7 @@ public class RestaurantController : ControllerBase
 
         return Ok(response);
     }
-    [Authorize]
+    //[Authorize]
     [HttpGet("{id}/menu")]
     public IActionResult GetRestaurantMenu(int id)
     {
@@ -69,12 +69,14 @@ public class RestaurantController : ControllerBase
 
         return Ok(menuItems);
     }
-    //[HttpGet("active")]
-    //public IActionResult GetActive() 
-    //{
-    //    var restaurants = _restaurantService.GetAllActive();
-    //    var restauratsDTOs = restaurants.Select(r =>r.ToDTO()).ToList();
-    //    return Ok(restauratsDTOs);
-    //}
+
+    [Authorize(Roles = "Customer")]
+    [HttpGet("active")]
+    public IActionResult GetActive()
+    {
+        var restaurants = _restaurantService.GetAllActive();
+        var restauratsDTOs = restaurants.Select(r => r.ToDTO()).ToList();
+        return Ok(restauratsDTOs);
+    }
 } 
 

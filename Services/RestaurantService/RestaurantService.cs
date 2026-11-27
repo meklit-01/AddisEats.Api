@@ -37,4 +37,11 @@ public class RestaurantService : IRestaurantService
             PageSize = query.PageSize
         };
     }
+    public IEnumerable<Restaurant> GetAllActive()
+    {
+        return allRestaurants
+            .Where(r => r.IsActive)
+            .ToList();
+    }
+
 }

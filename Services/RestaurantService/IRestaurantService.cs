@@ -8,4 +8,5 @@ public interface IRestaurantService
 {
     Restaurant? GetRestaurantById(int id);
     PaginatedResultDTO<Restaurant> GetAllRestaurants(RestaurantQuery query);
+    IEnumerable<Restaurant> GetAllActive();
 }
