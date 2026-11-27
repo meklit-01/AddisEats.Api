@@ -32,12 +32,17 @@ public class OrderController : ControllerBase
             return NotFound();
         }
 
-        var result = await _authorizationService.AuthorizeAsync(
-                User,
-                order,
-                OrderOperations.Read
-            );
-        if (!result.Succeeded) 
+        //var result = await _authorizationService.AuthorizeAsync(
+        //        User,
+        //        order,
+        //        OrderOperations.Read
+        //    );
+        //if (!result.Succeeded) 
+        //{
+        //    return Forbid();
+        //}
+        //the below and the above w/c is the commented out code result is the same
+        if(order.CustomerId != int.Parse(User.FindFirst("sub")?.Value))
         {
             return Forbid();
         }

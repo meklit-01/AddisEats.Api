@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
-using AddisEats.Api.Authorization; 
+using AddisEats.Api.Authorization;
+using AddisEats.Api.Middleware;
 
 using Microsoft.OpenApi;
 
@@ -60,6 +61,19 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+
+var allowedOrigins = builder.Configuration
+    .GetSection("AllowedOrigins")
+    .Get<string[]>() ?? [];
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("fronted", policy =>
+    {
+        policy.WithOrigins(allowedOrigins)
+              .WithMethods("GET", "POST", "PATCH", "DELETE")
+              .WithHeaders();
+    });
+});
 
 // Configure JWT settings
 builder.Services.Configure<JwtOptions>(
@@ -127,6 +141,11 @@ builder.Services.AddScoped<IAuthorizationHandler, OrderOwnerHandler>();
 
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+}
+
 // Configure HTTP pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -134,6 +153,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+app.UseCors("frontend");
+app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
