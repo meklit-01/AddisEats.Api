@@ -6,6 +6,7 @@ public class Order
 	public int RestaurantId { get; set; }
 	public int MenuItemId { get; set; }
 	public string CustomerName { get; set; } = string.Empty;
+	public int CustomerId {  get; set; }
 	public string DeliveryAddress { get; set; } = string.Empty;
 	public string CustomerPhone { get; set; } = string.Empty;
 	public int Quantity { get; set; }

@@ -7,7 +7,32 @@ namespace AddisEats.Api.Services.OrderService;
 
 public class OrderService : IOrderService
 {
-    private static readonly List<Order> _orders = new List<Order>();
+    private static readonly List<Order> _orders = new List<Order>()
+    {
+        new Order
+        {
+            Id = 1,
+            RestaurantId= 1,
+            MenuItemId = 1,
+            CustomerId = 1,
+            DeliveryAddress = "Addis Ababa, Ehiopia",
+            CustomerPhone = "0911234567",
+            Quantity = 2,
+            TotalAmount= 100.00m
+        },
+        new Order
+        {
+            Id =2,
+            RestaurantId = 2,
+            MenuItemId= 3,
+            CustomerId = 2,
+            DeliveryAddress = "Los Angles, CA, USA",
+            CustomerPhone = "555-123-4567",
+            Quantity = 1,
+            TotalAmount = 50.00m
+        }
+        
+    };
 
     private static int _nextId = 1;
     private readonly IRestaurantService _restaurantService;

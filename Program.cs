@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using AddisEats.Api.Authorization; 
 
 using Microsoft.OpenApi;
 
@@ -122,6 +123,7 @@ builder.Services.AddAuthorization(options =>
     .RequireAuthenticatedUser()
     .Build();
 } );
+builder.Services.AddScoped<IAuthorizationHandler, OrderOwnerHandler>();
 
 var app = builder.Build();
 
